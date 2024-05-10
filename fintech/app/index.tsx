@@ -1,16 +1,23 @@
 import { View, Text, TouchableOpacity } from 'react-native';
+import { Link } from 'expo-router';
 import { useAssets } from 'expo-asset';
 import { ResizeMode, Video } from 'expo-av';
 import { styles } from '@/constants/Styles';
-import { Message } from '@/constants/Message';
-import { Link } from 'expo-router';
+import Message from '@/constants/Message';
 import Colors from '@/constants/Colors';
 
 export default function IndexScreen() {
     const [assets] = useAssets([require('@/assets/videos/intro.mp4')]);
 
     return (
-        <View style={styles.container}>
+        <View
+            style={[
+                styles.container,
+                {
+                    justifyContent: 'space-between',
+                },
+            ]}
+        >
             {assets && (
                 <Video
                     isMuted
@@ -27,7 +34,13 @@ export default function IndexScreen() {
             <View style={styles.buttonContainer}>
                 <Link
                     href={'/login'}
-                    style={[styles.button, { backgroundColor: Colors.primary }]}
+                    style={[
+                        styles.button,
+                        {
+                            flex: 1,
+                            backgroundColor: Colors.primary,
+                        },
+                    ]}
                     asChild
                 >
                     <TouchableOpacity>
@@ -40,7 +53,13 @@ export default function IndexScreen() {
                 </Link>
                 <Link
                     href={'/signup'}
-                    style={[styles.button, { backgroundColor: Colors.light }]}
+                    style={[
+                        styles.button,
+                        {
+                            flex: 1,
+                            backgroundColor: Colors.light,
+                        },
+                    ]}
                     asChild
                 >
                     <TouchableOpacity>
