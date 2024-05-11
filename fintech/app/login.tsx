@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { styles } from '@/constants/Styles';
 import Message from '@/constants/Message';
 import Colors from '@/constants/Colors';
-import Ionicons from '@expo/vector-icons/Ionicons';
 
 enum LoginType {
     Phone,
