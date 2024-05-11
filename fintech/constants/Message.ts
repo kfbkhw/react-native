@@ -6,4 +6,7 @@ export default {
     signupDescription:
         'Enter your phone number. We will send you a six-digit confirmation code there.',
     signupHaveAccount: 'Already have an account? Log in',
+    loginTitle: 'Welcome back',
+    loginDescription: 'Enter the phone number associated with your account.',
+    loginButton: 'Continue',
 };

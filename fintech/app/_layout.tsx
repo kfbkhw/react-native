@@ -1,11 +1,11 @@
-import Colors from '@/constants/Colors';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFonts } from 'expo-font';
-import { Stack, useRouter } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import 'react-native-reanimated';
+import { Link, Stack, useRouter } from 'expo-router';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Colors from '@/constants/Colors';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -61,6 +61,49 @@ export default function RootLayout() {
                     ),
                 }}
             />
+            <Stack.Screen
+                name="login"
+                options={{
+                    title: '',
+                    headerTitle: '',
+                    headerBackTitle: '',
+                    headerShadowVisible: false,
+                    headerStyle: { backgroundColor: Colors.light },
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            style={{ paddingHorizontal: 10 }}
+                            disabled={!router.canGoBack()}
+                            onPress={() => router.back()}
+                        >
+                            <Ionicons
+                                name="arrow-back-outline"
+                                size={30}
+                                color={
+                                    router.canGoBack()
+                                        ? Colors.dark
+                                        : Colors.secondaryMuted
+                                }
+                            />
+                        </TouchableOpacity>
+                    ),
+                    headerRight: () => (
+                        <Link href={'/modal'} asChild>
+                            <TouchableOpacity style={{ paddingHorizontal: 10 }}>
+                                <Ionicons
+                                    name="help-circle-outline"
+                                    size={30}
+                                    color={
+                                        router.canGoBack()
+                                            ? Colors.dark
+                                            : Colors.secondaryMuted
+                                    }
+                                />
+                            </TouchableOpacity>
+                        </Link>
+                    ),
+                }}
+            />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         </Stack>
     );
 }

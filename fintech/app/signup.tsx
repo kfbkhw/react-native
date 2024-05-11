@@ -1,10 +1,9 @@
+import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Link } from 'expo-router';
 import { styles } from '@/constants/Styles';
 import Message from '@/constants/Message';
 import Colors from '@/constants/Colors';
-import { useState } from 'react';
-import { Link } from 'expo-router';
-// import { TextInput } from 'react-native-gesture-handler';
 
 export default function SignupScreen() {
     const [countryCode, setCountryCode] = useState('+82');

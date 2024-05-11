@@ -16,8 +16,10 @@ export const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
     button: {
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        gap: 10,
         height: 60,
         borderRadius: 30,
     },
