@@ -1,34 +1,66 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { useRouter } from 'expo-router';
+import { useSignIn } from '@clerk/clerk-expo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { styles } from '@/constants/Styles';
 import Message from '@/constants/Message';
 import Colors from '@/constants/Colors';
 
-enum LoginType {
+enum SignInType {
     Phone,
     Email,
     Google,
     Apple,
 }
 
-export default function LoginScreen() {
+export default function SignInScreen() {
     const [countryCode, setCountryCode] = useState('+82');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const { isLoaded, signIn } = useSignIn();
+    const { push } = useRouter();
 
-    const handleLogin = async (type: LoginType) => {
-        if (type === LoginType.Phone) {
-        } else if (type === LoginType.Email) {
-        } else if (type === LoginType.Google) {
-        } else if (type === LoginType.Apple) {
+    const handleSignIn = async (type: SignInType) => {
+        if (!isLoaded) {
+            return;
+        }
+
+        if (type === SignInType.Phone) {
+            const fullPhoneNumber = countryCode + phoneNumber;
+            try {
+                const { supportedFirstFactors } = await signIn.create({
+                    identifier: fullPhoneNumber,
+                });
+
+                const phoneFactor: any = supportedFirstFactors.find(
+                    (factor) => factor.strategy === 'phone_code'
+                );
+
+                const { phoneNumberId } = phoneFactor!;
+
+                await signIn.prepareFirstFactor({
+                    strategy: 'phone_code',
+                    phoneNumberId,
+                });
+
+                push({
+                    pathname: '/auth/[phone]',
+                    params: { phone: fullPhoneNumber, signin: 'true' },
+                });
+            } catch (error) {
+                console.error('There was an error signing in.');
+            }
+        } else if (type === SignInType.Email) {
+        } else if (type === SignInType.Google) {
+        } else if (type === SignInType.Apple) {
         }
     };
 
     return (
         <View style={[styles.container, { paddingHorizontal: 30 }]}>
-            <Text style={styles.title}>{Message.loginTitle}</Text>
-            <Text style={styles.description}>{Message.loginDescription}</Text>
+            <Text style={styles.title}>{Message.signInTitle}</Text>
+            <Text style={styles.description}>{Message.signInDescription}</Text>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -52,10 +84,10 @@ export default function LoginScreen() {
                     styles.button,
                     phoneNumber !== '' ? styles.enabled : styles.disabled,
                 ]}
-                onPress={() => handleLogin(LoginType.Phone)}
+                onPress={() => handleSignIn(SignInType.Phone)}
             >
                 <Text style={[styles.buttonText, { color: Colors.light }]}>
-                    {Message.loginButton}
+                    {Message.signInButton}
                 </Text>
             </TouchableOpacity>
             <View
@@ -91,11 +123,11 @@ export default function LoginScreen() {
             </View>
             <TouchableOpacity
                 style={[styles.button, { backgroundColor: 'white' }]}
-                onPress={() => handleLogin(LoginType.Email)}
+                onPress={() => handleSignIn(SignInType.Email)}
             >
                 <Ionicons name="mail" size={24} />
                 <Text style={[styles.buttonText, { color: Colors.dark }]}>
-                    {`${Message.loginButton} with email`}
+                    {`${Message.signInButton} with email`}
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -103,11 +135,11 @@ export default function LoginScreen() {
                     styles.button,
                     { marginTop: 20, backgroundColor: 'white' },
                 ]}
-                onPress={() => handleLogin(LoginType.Google)}
+                onPress={() => handleSignIn(SignInType.Google)}
             >
                 <Ionicons name="logo-google" size={24} />
                 <Text style={[styles.buttonText, { color: Colors.dark }]}>
-                    {`${Message.loginButton} with Google`}
+                    {`${Message.signInButton} with Google`}
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -115,11 +147,11 @@ export default function LoginScreen() {
                     styles.button,
                     { marginTop: 20, backgroundColor: 'white' },
                 ]}
-                onPress={() => handleLogin(LoginType.Apple)}
+                onPress={() => handleSignIn(SignInType.Apple)}
             >
                 <Ionicons name="logo-apple" size={24} />
                 <Text style={[styles.buttonText, { color: Colors.dark }]}>
-                    {`${Message.loginButton} with Apple`}
+                    {`${Message.signInButton} with Apple`}
                 </Text>
             </TouchableOpacity>
         </View>

@@ -1,21 +1,28 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { styles } from '@/constants/Styles';
 import Message from '@/constants/Message';
 import Colors from '@/constants/Colors';
 
-export default function SignupScreen() {
+export default function SignUpScreen() {
     const [countryCode, setCountryCode] = useState('+82');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const { push } = useRouter();
 
-    const handleSignup = async () => {};
+    const handleSignUp = () => {
+        const fullPhoneNumber = countryCode + phoneNumber;
+        push({
+            pathname: '/auth/[phone]',
+            params: { phone: fullPhoneNumber },
+        });
+    };
 
     return (
         <View style={[styles.container, { paddingHorizontal: 30 }]}>
-            <Text style={styles.title}>{Message.signupTitle}</Text>
-            <Text style={styles.description}>{Message.signupDescription}</Text>
+            <Text style={styles.title}>{Message.signUpTitle}</Text>
+            <Text style={styles.description}>{Message.signUpDescription}</Text>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -37,7 +44,7 @@ export default function SignupScreen() {
             <Link href={'/login'} replace asChild>
                 <TouchableOpacity>
                     <Text style={styles.linkText}>
-                        {Message.signupHaveAccount}
+                        {Message.signUpHaveAccount}
                     </Text>
                 </TouchableOpacity>
             </Link>
@@ -47,7 +54,7 @@ export default function SignupScreen() {
                     phoneNumber !== '' ? styles.enabled : styles.disabled,
                     { marginTop: 40 },
                 ]}
-                onPress={handleSignup}
+                onPress={handleSignUp}
             >
                 <Text style={[styles.buttonText, { color: Colors.light }]}>
                     {Message.indexButton2}
