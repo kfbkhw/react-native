@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import 'react-native-reanimated';
-import { ClerkProvider } from '@clerk/clerk-expo';
+import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
-import { Link, Stack, useRouter } from 'expo-router';
+import { Link, Stack, useRouter, useSegments } from 'expo-router';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from 'expo-splash-screen';
@@ -48,6 +48,8 @@ function Layout() {
         SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
     });
     const router = useRouter();
+    const { isLoaded, isSignedIn } = useAuth();
+    const segments = useSegments();
 
     useEffect(() => {
         if (error) throw error;
@@ -59,8 +61,22 @@ function Layout() {
         }
     }, [loaded]);
 
-    if (!loaded) {
-        return null;
+    useEffect(() => {
+        if (!isLoaded) {
+            return;
+        }
+
+        const isInUser = segments[0] === '(user)';
+
+        if (isSignedIn && !isInUser) {
+            router.replace('/(user)/(tabs)/home');
+        } else if (!isSignedIn && isInUser) {
+            router.replace('/(index)/(tabs)/home');
+        }
+    }, [isSignedIn]);
+
+    if (!loaded || !isLoaded) {
+        return <Text>Loading...</Text>;
     }
 
     return (
@@ -167,6 +183,12 @@ function Layout() {
                             />
                         </TouchableOpacity>
                     ),
+                }}
+            />
+            <Stack.Screen
+                name="(user)/(tabs)"
+                options={{
+                    headerShown: false,
                 }}
             />
         </Stack>

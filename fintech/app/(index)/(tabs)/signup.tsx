@@ -19,14 +19,14 @@ export default function SignUpScreen() {
         }
 
         let number = phoneNumber;
-        if (phoneNumber.startsWith('0')) {
+        if (countryCode === '+82' && phoneNumber.startsWith('0')) {
             number = phoneNumber.slice(1);
         }
         const fullPhoneNumber = `${countryCode}${number}`;
 
         try {
             await signUp.create({ phoneNumber: fullPhoneNumber });
-            signUp.preparePhoneNumberVerification();
+            await signUp.preparePhoneNumberVerification();
             push({
                 pathname: '/auth/[phone]',
                 params: { phone: fullPhoneNumber },

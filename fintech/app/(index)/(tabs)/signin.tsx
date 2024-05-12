@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import { useSignIn } from '@clerk/clerk-expo';
@@ -21,41 +21,56 @@ export default function SignInScreen() {
     const { isLoaded, signIn } = useSignIn();
     const { push } = useRouter();
 
-    const handleSignIn = async (type: SignInType) => {
+    const handleSignIn = (type: SignInType) => {
+        if (type === SignInType.Phone) {
+            handlePhoneSignIn();
+        } else if (type === SignInType.Email) {
+            handleEmailSignIn();
+        } else if (type === SignInType.Google) {
+            handleGoogleSignIn();
+        } else if (type === SignInType.Apple) {
+            handleAppleSignIn();
+        }
+    };
+
+    const handlePhoneSignIn = async () => {
         if (!isLoaded) {
             return;
         }
 
-        if (type === SignInType.Phone) {
-            const fullPhoneNumber = countryCode + phoneNumber;
-            try {
-                const { supportedFirstFactors } = await signIn.create({
-                    identifier: fullPhoneNumber,
-                });
+        let number = phoneNumber;
+        if (countryCode === '+82' && phoneNumber.startsWith('0')) {
+            number = phoneNumber.slice(1);
+        }
+        const fullPhoneNumber = `${countryCode}${number}`;
 
-                const phoneFactor: any = supportedFirstFactors.find(
-                    (factor) => factor.strategy === 'phone_code'
-                );
+        try {
+            const { supportedFirstFactors } = await signIn.create({
+                identifier: fullPhoneNumber,
+            });
 
-                const { phoneNumberId } = phoneFactor!;
+            const phoneFactor: any = supportedFirstFactors.find(
+                (factor) => factor.strategy === 'phone_code'
+            );
+            const { phoneNumberId } = phoneFactor!;
 
-                await signIn.prepareFirstFactor({
-                    strategy: 'phone_code',
-                    phoneNumberId,
-                });
+            await signIn.prepareFirstFactor({
+                strategy: 'phone_code',
+                phoneNumberId,
+            });
 
-                push({
-                    pathname: '/auth/[phone]',
-                    params: { phone: fullPhoneNumber, signin: 'true' },
-                });
-            } catch (error) {
-                console.error('There was an error signing in.');
-            }
-        } else if (type === SignInType.Email) {
-        } else if (type === SignInType.Google) {
-        } else if (type === SignInType.Apple) {
+            push({
+                pathname: '/auth/[phone]',
+                params: { phone: fullPhoneNumber, signin: 'true' },
+            });
+        } catch (error) {
+            Alert.alert('There was an error signing in.');
         }
     };
+
+    const handleEmailSignIn = async () => {};
+    const handleGoogleSignIn = async () => {};
+    const handleAppleSignIn = async () => {};
 
     return (
         <View style={[styles.container, { paddingHorizontal: 30 }]}>
