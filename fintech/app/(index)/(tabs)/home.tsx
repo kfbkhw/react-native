@@ -33,7 +33,7 @@ export default function IndexScreen() {
             </View>
             <View style={styles.buttonContainer}>
                 <Link
-                    href={'/login'}
+                    href={'/(index)/(tabs)/signin'}
                     style={[
                         styles.button,
                         {
@@ -52,7 +52,7 @@ export default function IndexScreen() {
                     </TouchableOpacity>
                 </Link>
                 <Link
-                    href={'/signup'}
+                    href={'/(index)/(tabs)/signup'}
                     style={[
                         styles.button,
                         {

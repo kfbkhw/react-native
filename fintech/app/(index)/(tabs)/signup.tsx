@@ -58,7 +58,7 @@ export default function SignUpScreen() {
                     onChangeText={setPhoneNumber}
                 />
             </View>
-            <Link href={'/login'} replace asChild>
+            <Link href={'/(index)/(tabs)/signin'} replace asChild>
                 <TouchableOpacity>
                     <Text style={styles.linkText}>
                         {Message.signUpHaveAccount}

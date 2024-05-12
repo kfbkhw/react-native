@@ -65,9 +65,12 @@ function Layout() {
 
     return (
         <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
-                name="signup"
+                name="/(index)/(tabs)/home"
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="/(index)/(tabs)/signup"
                 options={{
                     title: '',
                     headerTitle: '',
@@ -94,7 +97,7 @@ function Layout() {
                 }}
             />
             <Stack.Screen
-                name="login"
+                name="/(index)/(tabs)/signin"
                 options={{
                     title: '',
                     headerTitle: '',
@@ -119,7 +122,7 @@ function Layout() {
                         </TouchableOpacity>
                     ),
                     headerRight: () => (
-                        <Link href={'/modal'} asChild>
+                        <Link href={'/(index)/(modals)/modal'} asChild>
                             <TouchableOpacity style={{ paddingHorizontal: 10 }}>
                                 <Ionicons
                                     name="help-circle-outline"
@@ -135,7 +138,10 @@ function Layout() {
                     ),
                 }}
             />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+            <Stack.Screen
+                name="/(index)/(modals)/modal"
+                options={{ presentation: 'modal' }}
+            />
             <Stack.Screen
                 name="auth/[phone]"
                 options={{

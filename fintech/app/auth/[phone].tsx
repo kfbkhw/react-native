@@ -1,7 +1,7 @@
 import { View, Text, Platform, StyleSheet, Alert } from 'react-native';
-import React, { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { useAuth, useSignIn, useSignUp } from '@clerk/clerk-expo';
+import { useSignIn, useSignUp } from '@clerk/clerk-expo';
 import {
     CodeField,
     Cursor,
