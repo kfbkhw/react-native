@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Link, useRouter } from 'expo-router';
+import { useSignUp } from '@clerk/clerk-expo';
 import { styles } from '@/constants/Styles';
 import Message from '@/constants/Message';
 import Colors from '@/constants/Colors';
@@ -10,13 +11,29 @@ export default function SignUpScreen() {
     const [countryCode, setCountryCode] = useState('+82');
     const [phoneNumber, setPhoneNumber] = useState('');
     const { push } = useRouter();
+    const { isLoaded, signUp } = useSignUp();
 
-    const handleSignUp = () => {
-        const fullPhoneNumber = countryCode + phoneNumber;
-        push({
-            pathname: '/auth/[phone]',
-            params: { phone: fullPhoneNumber },
-        });
+    const handleSignUp = async () => {
+        if (!isLoaded) {
+            return;
+        }
+
+        let number = phoneNumber;
+        if (phoneNumber.startsWith('0')) {
+            number = phoneNumber.slice(1);
+        }
+        const fullPhoneNumber = `${countryCode}${number}`;
+
+        try {
+            await signUp.create({ phoneNumber: fullPhoneNumber });
+            signUp.preparePhoneNumberVerification();
+            push({
+                pathname: '/auth/[phone]',
+                params: { phone: fullPhoneNumber },
+            });
+        } catch (error) {
+            Alert.alert('There was an error signing up.');
+        }
     };
 
     return (

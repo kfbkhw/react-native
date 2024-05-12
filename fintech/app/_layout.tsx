@@ -136,6 +136,33 @@ function Layout() {
                 }}
             />
             <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+            <Stack.Screen
+                name="auth/[phone]"
+                options={{
+                    title: '',
+                    headerTitle: '',
+                    headerBackTitle: '',
+                    headerShadowVisible: false,
+                    headerStyle: { backgroundColor: Colors.light },
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            style={{ paddingHorizontal: 10 }}
+                            disabled={!router.canGoBack()}
+                            onPress={() => router.back()}
+                        >
+                            <Ionicons
+                                name="arrow-back-outline"
+                                size={30}
+                                color={
+                                    router.canGoBack()
+                                        ? Colors.dark
+                                        : Colors.secondaryMuted
+                                }
+                            />
+                        </TouchableOpacity>
+                    ),
+                }}
+            />
         </Stack>
     );
 }

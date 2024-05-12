@@ -9,4 +9,6 @@ export default {
     signInTitle: 'Welcome back',
     signInDescription: 'Enter the phone number associated with your account.',
     signInButton: 'Continue',
+    authTitle: '6-digit code',
+    authDescription: ['Code sent to ', ' unless you already have an account.'],
 };
