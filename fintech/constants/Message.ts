@@ -11,4 +11,12 @@ export default {
     signInButton: 'Continue',
     authTitle: '6-digit code',
     authDescription: ['Code sent to ', ' unless you already have an account.'],
+    homeAction1: 'Add money',
+    homeAction2: 'Exchange',
+    homeAction3: 'Details',
+    homeAction4: 'More',
+    homeSection1: 'Transactions',
+    homeSection2: 'Widgets',
+    homeNoTransaction: 'No transactions yet',
+    viewMore: 'View More',
 };
