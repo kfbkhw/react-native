@@ -10,10 +10,10 @@ import { Transaction, useTransactionStore } from '@/store/transactionStore';
 import { styles } from '@/constants/Styles';
 import Message from '@/constants/Message';
 import Colors from '@/constants/Colors';
-import IconButton from '@/components/IconButton';
+import ActionButton from '@/components/ActionButton';
 import TransactionItem from '@/components/TransactionItem';
-import WidgetContainer from '@/components/Widgets/WidgetContainer';
-import Widget from '@/components/Widgets/Widget';
+import WidgetContainer from '@/components/homeWidgets/WidgetContainer';
+import Widget from '@/components/homeWidgets/Widget';
 
 const widgets = ['spent', 'cashback', 'cards', 'recent'] as const;
 export type Widgets = (typeof widgets)[number];
@@ -52,22 +52,22 @@ export default function HomeScreen() {
                 <Text style={localStyles.balanceCurrency}>{CURRENCY}</Text>
             </View>
             <View style={localStyles.actions}>
-                <IconButton
+                <ActionButton
                     name="add"
                     text={Message.homeAction1}
                     onPress={handleAddMoney}
                 />
-                <IconButton
+                <ActionButton
                     name="repeat"
                     text={Message.homeAction2}
                     onPress={handleExchange}
                 />
-                <IconButton
+                <ActionButton
                     name="list"
                     text={Message.homeAction3}
                     onPress={handleDetails}
                 />
-                <IconButton
+                <ActionButton
                     name="ellipsis-horizontal"
                     text={Message.homeAction4}
                     onPress={handleMore}

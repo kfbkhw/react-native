@@ -2,13 +2,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '@/constants/Colors';
 
-interface IconButtonProps {
+interface ActionButtonProps {
     name: typeof Ionicons.defaultProps;
     text: string;
     onPress: () => void;
 }
 
-export default function IconButton({ name, text, onPress }: IconButtonProps) {
+export default function ActionButton({
+    name,
+    text,
+    onPress,
+}: ActionButtonProps) {
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <View style={styles.button}>

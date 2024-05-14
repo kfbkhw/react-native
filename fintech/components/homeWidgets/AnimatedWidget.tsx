@@ -8,7 +8,6 @@ import Animated, {
     scrollTo,
     withTiming,
     useSharedValue,
-    runOnJS,
     SharedValue,
     AnimatedRef,
 } from 'react-native-reanimated';
