@@ -1,16 +1,33 @@
-import Colors from '@/constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { BlurView } from 'expo-blur';
+import { Ionicons } from '@expo/vector-icons';
+import UserHomeHeader from '@/components/UserHomeHeader';
+import Colors from '@/constants/Colors';
 
 export default function UserLayout() {
     return (
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: Colors.primary,
+                tabBarBackground: () => (
+                    <BlurView
+                        intensity={100}
+                        tint={'extraLight'}
+                        style={{
+                            flex: 1,
+                            backgroundColor: 'rgba(0,0,0,0.05)',
+                        }}
+                    />
+                ),
                 tabBarStyle: {
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
                     height: 90,
                     paddingHorizontal: 10,
                     paddingVertical: 12,
+                    backgroundColor: 'transparent',
                 },
             }}
         >
@@ -25,6 +42,8 @@ export default function UserLayout() {
                             color={color}
                         />
                     ),
+                    header: () => <UserHomeHeader />,
+                    headerTransparent: true,
                 }}
             />
             <Tabs.Screen

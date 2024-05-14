@@ -5,12 +5,13 @@ import {
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
+import { useHeaderHeight } from '@react-navigation/elements';
 import { Transaction, useTransactionStore } from '@/store/transactionStore';
 import { styles } from '@/constants/Styles';
 import Message from '@/constants/Message';
+import Colors from '@/constants/Colors';
 import IconButton from '@/components/IconButton';
 import TransactionItem from '@/components/TransactionItem';
-import Colors from '@/constants/Colors';
 import WidgetContainer from '@/components/Widgets/WidgetContainer';
 import Widget from '@/components/Widgets/Widget';
 
@@ -19,6 +20,7 @@ export type Widgets = (typeof widgets)[number];
 
 export default function HomeScreen() {
     const CURRENCY = '$';
+    const headerHeight = useHeaderHeight();
     const { transactions, getBalance, add, clear } = useTransactionStore();
 
     const handleAddMoney = () => {
@@ -41,7 +43,10 @@ export default function HomeScreen() {
     const handleMore = () => {};
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView
+            style={styles.container}
+            contentContainerStyle={{ paddingVertical: headerHeight }}
+        >
             <View style={localStyles.balance}>
                 <Text style={localStyles.balanceText}>{getBalance()}</Text>
                 <Text style={localStyles.balanceCurrency}>{CURRENCY}</Text>
