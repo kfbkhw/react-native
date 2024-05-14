@@ -63,8 +63,8 @@ export const styles = StyleSheet.create({
         left: 0,
         right: 0,
     },
-    sectionContainer: { marginTop: 40 },
-    sectionTitle: { fontSize: 28, fontWeight: '700', color: Colors.dark },
+    sectionContainer: { marginTop: 20 },
+    sectionTitle: { fontSize: 24, fontWeight: '700', color: Colors.dark },
     sectionContent: {
         alignItems: 'center',
         justifyContent: 'center',

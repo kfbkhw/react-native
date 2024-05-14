@@ -11,6 +11,11 @@ import Message from '@/constants/Message';
 import IconButton from '@/components/IconButton';
 import TransactionItem from '@/components/TransactionItem';
 import Colors from '@/constants/Colors';
+import WidgetContainer from '@/components/Widgets/WidgetContainer';
+import Widget from '@/components/Widgets/Widget';
+
+const widgets = ['spent', 'cashback', 'cards', 'recent'] as const;
+export type Widgets = (typeof widgets)[number];
 
 export default function HomeScreen() {
     const CURRENCY = '$';
@@ -29,11 +34,11 @@ export default function HomeScreen() {
         add(transaction);
     };
 
-    const handleExchange = () => {};
-    const handleDetails = () => {};
-    const handleMore = () => {
+    const handleExchange = () => {
         clear();
     };
+    const handleDetails = () => {};
+    const handleMore = () => {};
 
     return (
         <ScrollView style={styles.container}>
@@ -75,6 +80,7 @@ export default function HomeScreen() {
                             .toReversed()
                             .map((transaction) => (
                                 <TransactionItem
+                                    key={transaction.id}
                                     transaction={transaction}
                                     currency={CURRENCY}
                                 />
@@ -86,6 +92,7 @@ export default function HomeScreen() {
                                 .slice(0, 4)
                                 .map((transaction) => (
                                     <TransactionItem
+                                        key={transaction.id}
                                         transaction={transaction}
                                         currency={CURRENCY}
                                     />
@@ -105,6 +112,20 @@ export default function HomeScreen() {
                             </TouchableOpacity>
                         </>
                     )}
+                </View>
+            </View>
+            <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>{Message.homeSection2}</Text>
+                <View style={{ marginVertical: 16 }}>
+                    <WidgetContainer editing={true}>
+                        {widgets.map((widget) => (
+                            <Widget
+                                onLongPress={() => true}
+                                key={widget}
+                                id={widget}
+                            />
+                        ))}
+                    </WidgetContainer>
                 </View>
             </View>
         </ScrollView>
@@ -127,5 +148,6 @@ const localStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 10,
+        marginBottom: 30,
     },
 });
