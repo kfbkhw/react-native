@@ -9,6 +9,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from 'expo-splash-screen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '@/constants/Colors';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient();
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -36,9 +38,11 @@ const tokenCache = {
 export default function RootLayout() {
     return (
         <ClerkProvider publishableKey={CLERK_KEY!} tokenCache={tokenCache}>
-            <GestureHandlerRootView>
-                <Layout />
-            </GestureHandlerRootView>
+            <QueryClientProvider client={queryClient}>
+                <GestureHandlerRootView>
+                    <Layout />
+                </GestureHandlerRootView>
+            </QueryClientProvider>
         </ClerkProvider>
     );
 }
