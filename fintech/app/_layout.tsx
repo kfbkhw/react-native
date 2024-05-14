@@ -191,6 +191,10 @@ function Layout() {
                     headerShown: false,
                 }}
             />
+            <Stack.Screen
+                name="(user)/(modals)/account"
+                options={{ presentation: 'modal', title: 'Account' }}
+            />
         </Stack>
     );
 }
