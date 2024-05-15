@@ -83,6 +83,8 @@ export default function UserLayout() {
                             color={color}
                         />
                     ),
+                    header: () => <UserHomeHeader />,
+                    headerTransparent: true,
                 }}
             />
         </Tabs>

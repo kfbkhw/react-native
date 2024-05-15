@@ -19,4 +19,5 @@ export default {
     homeSection2: 'Widgets',
     homeNoTransaction: 'No transactions yet',
     viewMore: 'View More',
+    cryptoTitle: 'Latest crypto',
 };

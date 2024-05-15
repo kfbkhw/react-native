@@ -1,4 +1,4 @@
-export interface Currency {
+export interface Crypto {
     circulating_supply: number;
     cmc_rank: number;
     date_added: string;
