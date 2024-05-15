@@ -6,7 +6,7 @@ import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 
-export default function UserHomeHeader() {
+export default function MainHeader() {
     const { top } = useSafeAreaInsets();
 
     return (

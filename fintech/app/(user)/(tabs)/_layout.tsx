@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
-import UserHomeHeader from '@/components/UserHomeHeader';
+import MainHeader from '@/components/MainHeader';
 import Colors from '@/constants/Colors';
 
 export default function UserLayout() {
@@ -42,7 +42,7 @@ export default function UserLayout() {
                             color={color}
                         />
                     ),
-                    header: () => <UserHomeHeader />,
+                    header: () => <MainHeader />,
                     headerTransparent: true,
                 }}
             />
@@ -57,6 +57,8 @@ export default function UserLayout() {
                             color={color}
                         />
                     ),
+                    header: () => <MainHeader />,
+                    headerTransparent: true,
                 }}
             />
             <Tabs.Screen
@@ -70,6 +72,8 @@ export default function UserLayout() {
                             color={color}
                         />
                     ),
+                    header: () => <MainHeader />,
+                    headerTransparent: true,
                 }}
             />
             <Tabs.Screen
@@ -83,7 +87,7 @@ export default function UserLayout() {
                             color={color}
                         />
                     ),
-                    header: () => <UserHomeHeader />,
+                    header: () => <MainHeader />,
                     headerTransparent: true,
                 }}
             />
