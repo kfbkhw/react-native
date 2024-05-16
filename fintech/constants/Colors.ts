@@ -5,4 +5,5 @@ export default {
     secondaryMuted: '#D8DCE2',
     light: '#F5F5F5',
     dark: '#141518',
+    white: '#FFFFFF',
 };

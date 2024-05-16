@@ -30,7 +30,11 @@ export default function CryptoScreen() {
             <Text style={styles.sectionTitle}>{Message.cryptoTitle}</Text>
             <View style={styles.sectionContent}>
                 {cryptos.data?.map((crypto) => (
-                    <CryptoItem crypto={crypto} logo={data?.[crypto.id].logo} />
+                    <CryptoItem
+                        key={crypto.id}
+                        crypto={crypto}
+                        logo={data?.[crypto.id].logo}
+                    />
                 ))}
             </View>
         </ScrollView>

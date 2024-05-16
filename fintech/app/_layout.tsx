@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import { TouchableOpacity, Text, View } from 'react-native';
 import 'react-native-reanimated';
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
@@ -54,6 +54,8 @@ function Layout() {
     const router = useRouter();
     const { isLoaded, isSignedIn } = useAuth();
     const segments = useSegments();
+    const [star, setStar] = useState(false);
+    const [notify, setNotify] = useState(false);
 
     useEffect(() => {
         if (error) throw error;
@@ -104,7 +106,7 @@ function Layout() {
                             onPress={() => router.back()}
                         >
                             <Ionicons
-                                name="arrow-back-outline"
+                                name="arrow-back"
                                 size={30}
                                 color={
                                     router.canGoBack()
@@ -131,7 +133,7 @@ function Layout() {
                             onPress={() => router.back()}
                         >
                             <Ionicons
-                                name="arrow-back-outline"
+                                name="arrow-back"
                                 size={30}
                                 color={
                                     router.canGoBack()
@@ -177,7 +179,7 @@ function Layout() {
                             onPress={() => router.back()}
                         >
                             <Ionicons
-                                name="arrow-back-outline"
+                                name="arrow-back"
                                 size={30}
                                 color={
                                     router.canGoBack()
@@ -198,6 +200,62 @@ function Layout() {
             <Stack.Screen
                 name="(user)/(modals)/account"
                 options={{ presentation: 'modal', title: 'Account' }}
+            />
+            <Stack.Screen
+                name="(user)/crypto/[id]"
+                options={{
+                    title: '',
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            disabled={!router.canGoBack()}
+                            onPress={() => router.back()}
+                        >
+                            <Ionicons
+                                name="arrow-back"
+                                size={26}
+                                color={
+                                    router.canGoBack()
+                                        ? Colors.dark
+                                        : Colors.secondaryMuted
+                                }
+                            />
+                        </TouchableOpacity>
+                    ),
+                    headerLargeTitle: true,
+                    headerTransparent: true,
+                    headerRight: () => (
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                gap: 20,
+                                paddingVertical: 8,
+                            }}
+                        >
+                            <TouchableOpacity onPress={() => setStar(!star)}>
+                                <Ionicons
+                                    name={star ? 'star' : 'star-outline'}
+                                    color={star ? Colors.primary : Colors.dark}
+                                    size={26}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => setNotify(!notify)}
+                            >
+                                <Ionicons
+                                    name={
+                                        notify
+                                            ? 'notifications'
+                                            : 'notifications-outline'
+                                    }
+                                    color={
+                                        notify ? Colors.primary : Colors.dark
+                                    }
+                                    size={26}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ),
+                }}
             />
         </Stack>
     );

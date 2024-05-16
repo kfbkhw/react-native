@@ -20,4 +20,9 @@ export default {
     homeNoTransaction: 'No transactions yet',
     viewMore: 'View More',
     cryptoTitle: 'Latest crypto',
+    cryptoDetailAction1: 'Buy',
+    cryptoDetailAction2: 'Receive',
+    cryptoDetailOverviewTitle: 'Overview',
+    cryptoDetailOverviewDescription:
+        'Bitcoin is a decentralized digital currency, without a central bank or single administrator, that can be sent from user to user on the peer-to-peer bitcoin network without the need for intermediaries. Transactions are verified by network nodes through cryptography and recorded in a public distributed ledger called a blockchain.',
 };
