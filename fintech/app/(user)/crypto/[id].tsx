@@ -14,14 +14,17 @@ import { useQuery } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Message from '@/constants/Message';
+import CryptoChart from '@/components/CryptoChart';
+import type { CryptoInfo } from '@/app/api/types/info';
+import type { Ticker } from '@/app/api/types/tickers';
 
-export default function Page() {
+export default function CryptoDetailScreen() {
     const { id } = useLocalSearchParams();
     const headerHeight = useHeaderHeight();
     const [activeIndex, setActiveIndex] = useState(0);
     const categories = ['Overview', 'News', 'Orders', 'Transactions'];
 
-    const { data: crypto } = useQuery({
+    const { data: crypto }: { data: CryptoInfo | undefined } = useQuery({
         queryKey: ['info', id],
         queryFn: async () => {
             const info = await fetch(`/api/info?ids=${id}`).then((res) =>
@@ -29,6 +32,17 @@ export default function Page() {
             );
             return info[+id!];
         },
+    });
+
+    const { data: tickers }: { data: Ticker[] | undefined } = useQuery({
+        queryKey: ['tickers', id],
+        queryFn: () =>
+            fetch(
+                `/api/tickers?id=${crypto?.symbol.toLowerCase()}-${
+                    crypto?.slug
+                }`
+            ).then((res) => res.json()),
+        enabled: !!crypto,
     });
 
     return (
@@ -187,35 +201,37 @@ export default function Page() {
                         </View>
                     </>
                 )}
-                renderItem={({ item }) => (
-                    <View
-                        style={{
-                            gap: 16,
-                            marginHorizontal: 20,
-                            marginTop: 20,
-                            padding: 14,
-                            borderRadius: 16,
-                            backgroundColor: Colors.white,
-                        }}
-                    >
-                        <Text
+                renderItem={() => (
+                    <>
+                        {tickers && <CryptoChart tickers={tickers} />}
+                        <View
                             style={{
-                                fontSize: 20,
-                                fontWeight: '700',
-                                color: Colors.dark,
+                                gap: 16,
+                                margin: 20,
+                                padding: 14,
+                                borderRadius: 16,
+                                backgroundColor: Colors.white,
                             }}
                         >
-                            {Message.cryptoDetailOverviewTitle}
-                        </Text>
-                        <Text
-                            style={{
-                                color: Colors.secondary,
-                                lineHeight: 18,
-                            }}
-                        >
-                            {Message.cryptoDetailOverviewDescription}
-                        </Text>
-                    </View>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: '700',
+                                    color: Colors.dark,
+                                }}
+                            >
+                                {Message.cryptoDetailOverviewTitle}
+                            </Text>
+                            <Text
+                                style={{
+                                    color: Colors.secondary,
+                                    lineHeight: 18,
+                                }}
+                            >
+                                {crypto?.description}
+                            </Text>
+                        </View>
+                    </>
                 )}
             ></SectionList>
         </>

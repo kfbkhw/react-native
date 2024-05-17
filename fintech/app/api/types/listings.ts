@@ -47,3 +47,5 @@ export interface Platform {
     symbol: string;
     token_address: string;
 }
+
+

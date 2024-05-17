@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { type UseQueryResult, useQuery } from '@tanstack/react-query';
-import type { Crypto } from '@/app/api/types/crypto';
+import type { Crypto } from '@/app/api/types/listings';
 import Message from '@/constants/Message';
 import { styles } from '@/constants/Styles';
 import CryptoItem from '@/components/CryptoItem';

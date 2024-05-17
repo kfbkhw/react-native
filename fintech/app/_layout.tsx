@@ -49,7 +49,7 @@ export default function RootLayout() {
 
 function Layout() {
     const [loaded, error] = useFonts({
-        SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
+        Inter: require('@/assets/fonts/Inter-Regular.ttf'),
     });
     const router = useRouter();
     const { isLoaded, isSignedIn } = useAuth();

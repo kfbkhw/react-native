@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import Colors from '@/constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import type { Crypto } from '@/app/api/types/crypto';
+import type { Crypto } from '@/app/api/types/listings';
 
 interface CryptoItemProps {
     crypto: Crypto;
